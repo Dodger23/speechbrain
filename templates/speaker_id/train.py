@@ -292,10 +292,10 @@ if __name__ == "__main__":
     sb.utils.distributed.run_on_main(
         prepare_mini_librispeech,
         kwargs={
-            "data_folder": hparams["data_folder"],
-            "save_json_train": hparams["train_annotation"],
-            "save_json_valid": hparams["valid_annotation"],
-            "save_json_test": hparams["test_annotation"],
+            "data_folder": 'minispeakers/train',
+            "save_json_train": 'train.json',
+            "save_json_valid": 'valid.json',
+            "save_json_test": 'test.json',
             "split_ratio": [80, 10, 10],
         },
     )

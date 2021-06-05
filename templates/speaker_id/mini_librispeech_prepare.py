@@ -1,13 +1,3 @@
-"""
-Downloads and creates data manifest files for Mini LibriSpeech (spk-id).
-For speaker-id, different sentences of the same speaker must appear in train,
-validation, and test sets. In this case, these sets are thus derived from
-splitting the original training set intothree chunks.
-
-Authors:
- * Mirco Ravanelli, 2021
-"""
-
 import os
 import json
 import shutil
@@ -17,7 +7,7 @@ from speechbrain.utils.data_utils import get_all_files, download_file
 from speechbrain.dataio.dataio import read_audio
 
 logger = logging.getLogger(__name__)
-MINILIBRI_TRAIN_URL = "http://www.openslr.org/resources/31/train-clean-5.tar.gz"
+# MINILIBRI_TRAIN_URL = "http://www.openslr.org/resources/31/train-clean-5.tar.gz"
 SAMPLERATE = 16000
 
 
@@ -28,11 +18,10 @@ def prepare_mini_librispeech(
     save_json_test,
     split_ratio=[80, 10, 10],
 ):
+    
     """
     Prepares the json files for the Mini Librispeech dataset.
-
     Downloads the dataset if it is not found in the `data_folder`.
-
     Arguments
     ---------
     data_folder : str
@@ -48,33 +37,32 @@ def prepare_mini_librispeech(
         and test sets, respectively. For instance split_ratio=[80, 10, 10] will
         assign 80% of the sentences to training, 10% for validation, and 10%
         for test.
-
     Example
     -------
     >>> data_folder = '/path/to/mini_librispeech'
     >>> prepare_mini_librispeech(data_folder, 'train.json', 'valid.json', 'test.json')
     """
 
-    # Check if this phase is already done (if so, skip it)
-    if skip(save_json_train, save_json_valid, save_json_test):
-        logger.info("Preparation completed in previous run, skipping.")
-        return
+#     # Check if this phase is already done (if so, skip it)
+#     if skip(save_json_train, save_json_valid, save_json_test):
+#         logger.info("Preparation completed in previous run, skipping.")
+#         return
 
-    # If the dataset doesn't exist yet, download it
-    train_folder = os.path.join(data_folder, "LibriSpeech", "train-clean-5")
-    if not check_folders(train_folder):
-        download_mini_librispeech(data_folder)
+#     # If the dataset doesn't exist yet, download it
+    train_folder = data_folder
+#     if not check_folders(train_folder):
+#         download_mini_librispeech(data_folder)
 
     # List files and create manifest from list
     logger.info(
         f"Creating {save_json_train}, {save_json_valid}, and {save_json_test}"
     )
-    extension = [".flac"]
+    extension = [".wav"]
     wav_list = get_all_files(train_folder, match_and=extension)
 
     # Random split the signal list into train, valid, and test sets.
     data_split = split_sets(wav_list, split_ratio)
-
+   
     # Creating json files
     create_json(data_split["train"], save_json_train)
     create_json(data_split["valid"], save_json_valid)
@@ -84,7 +72,6 @@ def prepare_mini_librispeech(
 def create_json(wav_list, json_file):
     """
     Creates the json file given a list of wav files.
-
     Arguments
     ---------
     wav_list : list of str
@@ -95,15 +82,14 @@ def create_json(wav_list, json_file):
     # Processing all the wav files in the list
     json_dict = {}
     for wav_file in wav_list:
-
         # Reading the signal (to retrieve duration in seconds)
         signal = read_audio(wav_file)
         duration = signal.shape[0] / SAMPLERATE
 
         # Manipulate path to get relative path and uttid
         path_parts = wav_file.split(os.path.sep)
-        uttid, _ = os.path.splitext(path_parts[-1])
-        relative_path = os.path.join("{data_root}", *path_parts[-5:])
+        uttid, _ = os.path.splitext(path_parts[2])
+        relative_path = os.path.join(*path_parts[-5:])
 
         # Getting speaker-id from utterance-id
         spk_id = uttid.split("-")[0]
@@ -126,7 +112,6 @@ def skip(*filenames):
     """
     Detects if the data preparation has been already done.
     If the preparation has been done, we can skip it.
-
     Returns
     -------
     bool
@@ -155,7 +140,6 @@ def split_sets(wav_list, split_ratio):
     is the approach followed in some recipes such as the Voxceleb one. For
     simplicity, we here simply split the full list without necessarily respecting
     the split ratio within each class.
-
     Arguments
     ---------
     wav_lst : list
@@ -165,7 +149,6 @@ def split_sets(wav_list, split_ratio):
         and test sets, respectively. For instance split_ratio=[80, 10, 10] will
         assign 80% of the sentences to training, 10% for validation, and 10%
         for test.
-
     Returns
     ------
     dictionary containing train, valid, and test splits.
@@ -188,7 +171,6 @@ def split_sets(wav_list, split_ratio):
 
 def download_mini_librispeech(destination):
     """Download dataset and unpack it.
-
     Arguments
     ---------
     destination : str
