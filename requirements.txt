@@ -7,7 +7,7 @@ pre-commit>=2.3.0
 scipy>=1.4.1
 sentencepiece>=0.1.91
 torch==1.8.0
-torchaudio>=0.7.2
+torchaudio==0.8.1
 tqdm>=4.42.0
 huggingface_hub>=0.0.6
 SoundFile; sys_platform == 'win32'
