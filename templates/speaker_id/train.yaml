@@ -45,7 +45,7 @@ n_mels: 23
 # Training Parameters
 sample_rate: 16000
 number_of_epochs: 30
-batch_size: 10
+batch_size: 20
 lr_start: 0.001
 lr_final: 0.0001
 n_classes: 27 # In this case, we have 27 speakers
