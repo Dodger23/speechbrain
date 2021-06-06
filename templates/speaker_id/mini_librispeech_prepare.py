@@ -89,7 +89,7 @@ def create_json(wav_list, json_file):
         # Manipulate path to get relative path and uttid
         path_parts = wav_file.split(os.path.sep)
         uttid, _ = os.path.splitext(path_parts[-1])
-        relative_path = os.path.join(*path_parts[-5:])
+        relative_path = os.path.join("{data_root}", *path_parts[-5:])
 
         # Getting speaker-id from utterance-id
         spk_id = uttid.split('-')[0]
