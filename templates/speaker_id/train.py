@@ -292,7 +292,7 @@ if __name__ == "__main__":
     sb.utils.distributed.run_on_main(
         prepare_mini_librispeech,
         kwargs={
-            "data_folder": 'minispeakers',
+            "data_folder": 'minispeakers/data',
             "save_json_train": 'train.json',
             "save_json_valid": 'valid.json',
             "save_json_test": 'test.json',
