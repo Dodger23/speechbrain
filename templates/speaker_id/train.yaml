@@ -35,7 +35,7 @@ train_logger: !new:speechbrain.utils.train_logger.FileTrainLogger
 
 error_stats: !name:speechbrain.utils.metric_stats.MetricStats
     metric: !name:speechbrain.nnet.losses.classification_error
-        reduction: none
+        reduction: batch
 
 ckpt_interval_minutes: 15 # save checkpoint every N min
 
@@ -57,7 +57,7 @@ dataloader_options:
 # Added noise and reverb come from OpenRIR dataset, automatically
 # downloaded and prepared with this Environmental Corruption class.
 env_corrupt: !new:speechbrain.lobes.augment.EnvCorrupt
-    openrir_folder: !ref <data_folder> # original = <data_folder>
+    openrir_folder: !ref <data_folder> 
     babble_prob: 0.0
     reverb_prob: 0.0
     noise_prob: 1.0

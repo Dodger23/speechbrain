@@ -631,6 +631,8 @@ def compute_masked_loss(
         mask *= length_mask
 
     # Compute, then reduce loss
+    print(predictions.shap)
+    print(targets.shape)
     loss = loss_fn(predictions, targets) * mask
     N = loss.size(0)
     if reduction == "mean":
