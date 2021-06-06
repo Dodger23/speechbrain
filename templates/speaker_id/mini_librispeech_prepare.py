@@ -90,9 +90,9 @@ def create_json(wav_list, json_file):
         path_parts = wav_file.split(os.path.sep)
         uttid, _ = os.path.splitext(path_parts[-1])
         if(path_parts[0]!='minispeakers'):
-            path_parts.insert(0, 'minispeakers')
-        relative_path = os.path.join(*path_parts[-5:])
-
+            relative_path = os.path.join('minispeakers' , *path_parts[-5:])
+        else:
+            relative_path = os.path.join(*path_parts[-5:])
         # Getting speaker-id from utterance-id
         spk_id = uttid.split('-')[0]
 
