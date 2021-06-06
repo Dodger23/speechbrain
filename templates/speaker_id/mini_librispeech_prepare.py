@@ -170,13 +170,13 @@ def split_sets(wav_list, split_ratio):
     return data_split
 
 
-def download_mini_librispeech(destination):
-    """Download dataset and unpack it.
-    Arguments
-    ---------
-    destination : str
-        Place to put dataset.
-    """
-    train_archive = os.path.join(destination, "train-clean-5.tar.gz")
-    download_file(MINILIBRI_TRAIN_URL, train_archive)
-    shutil.unpack_archive(train_archive, destination)
+# def download_mini_librispeech(destination):
+#     """Download dataset and unpack it.
+#     Arguments
+#     ---------
+#     destination : str
+#         Place to put dataset.
+#     """
+#     train_archive = os.path.join(destination, "train-clean-5.tar.gz")
+#     download_file(MINILIBRI_TRAIN_URL, train_archive)
+#     shutil.unpack_archive(train_archive, destination)
