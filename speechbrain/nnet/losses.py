@@ -631,12 +631,17 @@ def compute_masked_loss(
         mask *= length_mask
 
     # Compute, then reduce loss
+    try:
+        loss = loss_fn(predictions, targets) * mask
+    except:
+        print('mask: ')
+        print(mask)
+
     print('predictions :')
     print(predictions.shape )
     print('targets: ')
     print(targets.shape)
     return
-    loss = loss_fn(predictions, targets) * mask
     N = loss.size(0)
     if reduction == "mean":
         loss = loss.sum() / torch.sum(mask)
